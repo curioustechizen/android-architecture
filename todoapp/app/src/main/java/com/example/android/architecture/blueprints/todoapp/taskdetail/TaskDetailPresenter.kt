@@ -48,17 +48,13 @@ class TaskDetailPresenter(private val mTaskId: String?,
 
         taskDetailView.setLoadingIndicator(true)
         tasksRepository.getTask(mTaskId!!, object : TasksDataSource.GetTaskCallback {
-            override fun onTaskLoaded(task: Task?) {
+            override fun onTaskLoaded(task: Task) {
                 // The view may not be able to handle UI updates anymore
                 if (!taskDetailView.isActive) {
                     return
                 }
                 taskDetailView.setLoadingIndicator(false)
-                if (null == task) {
-                    taskDetailView.showMissingTask()
-                } else {
-                    showTask(task)
-                }
+                showTask(task)
             }
 
             override fun onDataNotAvailable() {

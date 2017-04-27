@@ -59,7 +59,7 @@ class StatisticsActivity : AppCompatActivity() {
         setupDrawerContent(navigationView)
 
         var statisticsFragment: StatisticsFragment? = supportFragmentManager
-                .findFragmentById(R.id.contentFrame) as StatisticsFragment
+                .findFragmentById(R.id.contentFrame) as StatisticsFragment?
         if (statisticsFragment == null) {
             statisticsFragment = StatisticsFragment.newInstance()
             ActivityUtils.addFragmentToActivity(supportFragmentManager,

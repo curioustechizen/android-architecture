@@ -50,7 +50,7 @@ class TaskDetailActivity : AppCompatActivity() {
         val taskId = intent.getStringExtra(EXTRA_TASK_ID)
 
         var taskDetailFragment: TaskDetailFragment? = supportFragmentManager
-                .findFragmentById(R.id.contentFrame) as TaskDetailFragment
+                .findFragmentById(R.id.contentFrame) as TaskDetailFragment?
 
         if (taskDetailFragment == null) {
             taskDetailFragment = TaskDetailFragment.newInstance(taskId)

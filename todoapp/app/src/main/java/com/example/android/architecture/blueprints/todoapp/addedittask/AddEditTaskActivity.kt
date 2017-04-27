@@ -52,7 +52,7 @@ class AddEditTaskActivity : AppCompatActivity() {
 
 
         var addEditTaskFragment: AddEditTaskFragment? = supportFragmentManager
-                .findFragmentById(R.id.contentFrame) as AddEditTaskFragment
+                .findFragmentById(R.id.contentFrame) as AddEditTaskFragment?
 
         val taskId = intent.getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID)
 
