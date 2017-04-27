@@ -113,7 +113,7 @@ class TasksActivity : AppCompatActivity() {
 
     val countingIdlingResource: IdlingResource
         @VisibleForTesting
-        get() = EspressoIdlingResource.getIdlingResource()
+        get() = EspressoIdlingResource.idlingResource
 
     companion object {
 
