@@ -51,15 +51,17 @@ class TaskDetailFragment : Fragment(), TaskDetailContract.View {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val root = inflater!!.inflate(R.layout.taskdetail_frag, container, false)
-        setHasOptionsMenu(true)
-        mDetailTitle = root.findViewById(R.id.task_detail_title) as TextView
-        mDetailDescription = root.findViewById(R.id.task_detail_description) as TextView
-        mDetailCompleteStatus = root.findViewById(R.id.task_detail_complete) as CheckBox
+        root.apply {
+            mDetailTitle = findViewById(R.id.task_detail_title) as TextView
+            mDetailDescription = findViewById(R.id.task_detail_description) as TextView
+            mDetailCompleteStatus = findViewById(R.id.task_detail_complete) as CheckBox
+        }
 
         // Set up floating action button
         val fab = activity.findViewById(R.id.fab_edit_task) as FloatingActionButton
 
         fab.setOnClickListener { mPresenter.editTask() }
+        setHasOptionsMenu(true)
 
         return root
     }

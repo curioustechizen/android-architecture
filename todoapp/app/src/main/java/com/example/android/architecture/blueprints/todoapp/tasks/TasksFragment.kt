@@ -76,17 +76,31 @@ class TasksFragment : Fragment(), TasksContract.View {
         val root = inflater!!.inflate(R.layout.tasks_frag, container, false)
 
         // Set up tasks view
-        val listView = root.findViewById(R.id.tasks_list) as ListView
-        listView.adapter = mListAdapter
-        mFilteringLabelView = root.findViewById(R.id.filteringLabel) as TextView
-        mTasksView = root.findViewById(R.id.tasksLL) as LinearLayout
+        root.apply {
+            val listView = findViewById(R.id.tasks_list) as ListView
+            listView.adapter = mListAdapter
+            mFilteringLabelView = findViewById(R.id.filteringLabel) as TextView
+            mTasksView = findViewById(R.id.tasksLL) as LinearLayout
 
-        // Set up  no tasks view
-        mNoTasksView = root.findViewById(R.id.noTasks)
-        mNoTaskIcon = root.findViewById(R.id.noTasksIcon) as ImageView
-        mNoTaskMainView = root.findViewById(R.id.noTasksMain) as TextView
-        mNoTaskAddView = root.findViewById(R.id.noTasksAdd) as TextView
-        mNoTaskAddView.setOnClickListener { showAddTask() }
+            // Set up  no tasks view
+            mNoTasksView = findViewById(R.id.noTasks)
+            mNoTaskIcon = findViewById(R.id.noTasksIcon) as ImageView
+            mNoTaskMainView = findViewById(R.id.noTasksMain) as TextView
+            mNoTaskAddView = findViewById(R.id.noTasksAdd) as TextView
+            mNoTaskAddView.setOnClickListener { showAddTask() }
+
+            // Set up progress indicator
+            val swipeRefreshLayout = root.findViewById(R.id.refresh_layout) as ScrollChildSwipeRefreshLayout
+            swipeRefreshLayout.setColorSchemeColors(
+                    ContextCompat.getColor(activity, R.color.colorPrimary),
+                    ContextCompat.getColor(activity, R.color.colorAccent),
+                    ContextCompat.getColor(activity, R.color.colorPrimaryDark)
+            )
+            // Set the scrolling view in the custom SwipeRefreshLayout.
+            swipeRefreshLayout.setScrollUpChild(listView)
+
+            swipeRefreshLayout.setOnRefreshListener { mPresenter.loadTasks(false) }
+        }
 
         // Set up floating action button
         val fab = activity.findViewById(R.id.fab_add_task) as FloatingActionButton
@@ -94,17 +108,6 @@ class TasksFragment : Fragment(), TasksContract.View {
         fab.setImageResource(R.drawable.ic_add)
         fab.setOnClickListener { mPresenter.addNewTask() }
 
-        // Set up progress indicator
-        val swipeRefreshLayout = root.findViewById(R.id.refresh_layout) as ScrollChildSwipeRefreshLayout
-        swipeRefreshLayout.setColorSchemeColors(
-                ContextCompat.getColor(activity, R.color.colorPrimary),
-                ContextCompat.getColor(activity, R.color.colorAccent),
-                ContextCompat.getColor(activity, R.color.colorPrimaryDark)
-        )
-        // Set the scrolling view in the custom SwipeRefreshLayout.
-        swipeRefreshLayout.setScrollUpChild(listView)
-
-        swipeRefreshLayout.setOnRefreshListener { mPresenter.loadTasks(false) }
 
         setHasOptionsMenu(true)
 
@@ -129,12 +132,14 @@ class TasksFragment : Fragment(), TasksContract.View {
         popup.menuInflater.inflate(R.menu.filter_tasks, popup.menu)
 
         popup.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.active -> mPresenter.filtering = TasksFilterType.ACTIVE_TASKS
-                R.id.completed -> mPresenter.filtering = TasksFilterType.COMPLETED_TASKS
-                else -> mPresenter.filtering = TasksFilterType.ALL_TASKS
+            mPresenter.apply {
+                filtering = when (item.itemId) {
+                    R.id.active -> TasksFilterType.ACTIVE_TASKS
+                    R.id.completed -> TasksFilterType.COMPLETED_TASKS
+                    else -> TasksFilterType.ALL_TASKS
+                }
+                loadTasks(false)
             }
-            mPresenter.loadTasks(false)
             true
         }
 
@@ -292,20 +297,23 @@ class TasksFragment : Fragment(), TasksContract.View {
             val completeCB = rowView.findViewById(R.id.complete) as CheckBox
 
             // Active/completed task UI
-            completeCB.isChecked = task.isCompleted
+            rowView.apply {
+                setBackgroundDrawable(viewGroup.context.resources.getDrawable(
+                        if (task.isCompleted) R.drawable.list_completed_touch_feedback
+                        else R.drawable.touch_feedback))
+                setOnClickListener { mItemListener.onTaskClick(task) }
 
-            rowView.setBackgroundDrawable(viewGroup.context.resources.getDrawable(
-                    if (task.isCompleted) R.drawable.list_completed_touch_feedback
-                    else R.drawable.touch_feedback))
-
-            completeCB.setOnClickListener {
-                mItemListener.apply {
-                    if (!task.isCompleted) onCompleteTaskClick(task)
-                    else onActivateTaskClick(task)
-                }
             }
 
-            rowView.setOnClickListener { mItemListener.onTaskClick(task) }
+            completeCB.apply {
+                isChecked = task.isCompleted
+                setOnClickListener {
+                    mItemListener.apply {
+                        if (!task.isCompleted) onCompleteTaskClick(task)
+                        else onActivateTaskClick(task)
+                    }
+                }
+            }
 
             return rowView
         }
