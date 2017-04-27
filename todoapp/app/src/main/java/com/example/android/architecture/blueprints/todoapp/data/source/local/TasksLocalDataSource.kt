@@ -18,16 +18,10 @@ package com.example.android.architecture.blueprints.todoapp.data.source.local
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
-
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.local.TasksPersistenceContract.TaskEntry
-
-import java.util.ArrayList
-
-import com.google.common.base.Preconditions.checkNotNull
+import java.util.*
 
 
 /**
@@ -111,7 +105,6 @@ private constructor(val context: Context) : TasksDataSource {
     }
 
     override fun saveTask(task: Task) {
-        checkNotNull(task)
         val db = mDbHelper.writableDatabase
 
         val values = ContentValues()

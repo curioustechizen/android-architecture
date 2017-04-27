@@ -16,12 +16,8 @@
 
 package com.example.android.architecture.blueprints.todoapp.data.source
 
-import com.google.common.base.Preconditions.checkNotNull
-
 import com.example.android.architecture.blueprints.todoapp.data.Task
-
-import java.util.ArrayList
-import java.util.LinkedHashMap
+import java.util.*
 
 /**
  * Concrete implementation to load tasks from the data sources into a cache.
@@ -209,8 +205,8 @@ private constructor(val tasksRemoteDataSource: TasksDataSource,
     }
 
     override fun deleteTask(taskId: String) {
-        tasksRemoteDataSource.deleteTask(checkNotNull(taskId))
-        tasksLocalDataSource.deleteTask(checkNotNull(taskId))
+        tasksRemoteDataSource.deleteTask(taskId)
+        tasksLocalDataSource.deleteTask(taskId)
 
         mCachedTasks?.remove(taskId)
     }

@@ -21,8 +21,6 @@ import com.example.android.architecture.blueprints.todoapp.data.source.TasksData
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 import com.google.common.base.Strings
 
-import com.google.common.base.Preconditions.checkNotNull
-
 /**
  * Listens to user actions from the UI ([TaskDetailFragment]), retrieves the data and updates
  * the UI as required.
