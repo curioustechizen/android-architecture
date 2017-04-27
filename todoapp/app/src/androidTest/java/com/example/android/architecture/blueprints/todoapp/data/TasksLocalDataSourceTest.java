@@ -28,6 +28,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class TasksLocalDataSourceTest {
 
     @Before
     public void setup() {
-         mLocalDataSource = TasksLocalDataSource.getInstance(
+         mLocalDataSource = TasksLocalDataSource.Companion.getInstance(
                  InstrumentationRegistry.getTargetContext());
     }
 
@@ -193,7 +194,7 @@ public class TasksLocalDataSourceTest {
         mLocalDataSource.getTasks(callback);
 
         verify(callback).onDataNotAvailable();
-        verify(callback, never()).onTasksLoaded(anyList());
+        verify(callback, never()).onTasksLoaded(ArgumentMatchers.<Task>anyList());
     }
 
     @Test
