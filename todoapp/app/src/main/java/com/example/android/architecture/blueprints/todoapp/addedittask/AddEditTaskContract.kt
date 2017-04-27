@@ -14,35 +14,35 @@
  * limitations under the License.
  */
 
-package com.example.android.architecture.blueprints.todoapp.addedittask;
+package com.example.android.architecture.blueprints.todoapp.addedittask
 
-import com.example.android.architecture.blueprints.todoapp.BasePresenter;
-import com.example.android.architecture.blueprints.todoapp.BaseView;
+import com.example.android.architecture.blueprints.todoapp.BasePresenter
+import com.example.android.architecture.blueprints.todoapp.BaseView
 
 /**
  * This specifies the contract between the view and the presenter.
  */
-public interface AddEditTaskContract {
+interface AddEditTaskContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View : BaseView<Presenter> {
 
-        void showEmptyTaskError();
+        fun showEmptyTaskError()
 
-        void showTasksList();
+        fun showTasksList()
 
-        void setTitle(String title);
+        fun setTitle(title: String)
 
-        void setDescription(String description);
+        fun setDescription(description: String)
 
-        boolean isActive();
+        val isActive: Boolean
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter : BasePresenter {
 
-        void saveTask(String title, String description);
+        fun saveTask(title: String, description: String)
 
-        void populateTask();
+        fun populateTask()
 
-        boolean isDataMissing();
+        var isDataMissing: Boolean
     }
 }
