@@ -14,28 +14,26 @@
  * limitations under the License.
  */
 
-package com.example.android.architecture.blueprints.todoapp.statistics;
+package com.example.android.architecture.blueprints.todoapp.statistics
 
-import com.example.android.architecture.blueprints.todoapp.BasePresenter;
-import com.example.android.architecture.blueprints.todoapp.BaseView;
+import com.example.android.architecture.blueprints.todoapp.BasePresenter
+import com.example.android.architecture.blueprints.todoapp.BaseView
 
 /**
  * This specifies the contract between the view and the presenter.
  */
-public interface StatisticsContract {
+interface StatisticsContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View : BaseView<Presenter> {
 
-        void setProgressIndicator(boolean active);
+        fun setProgressIndicator(active: Boolean)
 
-        void showStatistics(int numberOfIncompleteTasks, int numberOfCompletedTasks);
+        fun showStatistics(numberOfIncompleteTasks: Int, numberOfCompletedTasks: Int)
 
-        void showLoadingStatisticsError();
+        fun showLoadingStatisticsError()
 
-        boolean isActive();
+        val isActive: Boolean
     }
 
-    interface Presenter extends BasePresenter {
-
-    }
+    interface Presenter : BasePresenter
 }
