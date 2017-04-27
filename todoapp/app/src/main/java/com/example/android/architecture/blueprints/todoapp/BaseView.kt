@@ -14,24 +14,10 @@
  * limitations under the License.
  */
 
-package com.example.android.architecture.blueprints.todoapp.tasks;
+package com.example.android.architecture.blueprints.todoapp
 
-/**
- * Used with the filter spinner in the tasks list.
- */
-public enum TasksFilterType {
-    /**
-     * Do not filter tasks.
-     */
-    ALL_TASKS,
+interface BaseView<in T> {
 
-    /**
-     * Filters only the active (not completed yet) tasks.
-     */
-    ACTIVE_TASKS,
+    fun setPresenter(presenter: T)
 
-    /**
-     * Filters only the completed tasks.
-     */
-    COMPLETED_TASKS
 }
