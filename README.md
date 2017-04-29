@@ -1,3 +1,7 @@
+# UPDATE
+
+There is already [another fork](https://github.com/aballano/android-architecture/tree/dev-todo-mvp-kotlin) that has converted this project to Kotlin, and that fork has gone even further (added Kotlin Android extensions, created some extension functions etc). I don't expect to continue work on my fork.
+
 # dev-todo-mvp-kotlin
 
 This project aims to convert the [todo-mvp](https://github.com/googlesamples/android-architecture/tree/todo-mvp) branch to idiomatic Kotlin, while also not being a complete rewrite.
